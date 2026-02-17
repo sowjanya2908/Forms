@@ -4,6 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Craft</title>
+    <style>
+        #itemTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        #itemTable th, #itemTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #itemTable th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #itemTable tr:hover {
+            background-color: #f5f5f5;
+        }
+        .select-checkbox {
+            cursor: pointer;
+        }
+        .selected-items {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 
 <body>
@@ -47,13 +75,125 @@
         <label id="lblDescription" for="description">Description:</label><br>
         <input type="text" id="description" name="description" placeholder="Enter a summary of the craft details"
             required><br><br>
-            <h1>Drawing reference</h1>
-            <label id="lbldrawingreference" for="drawingreference">Drawing reference:</label><br>
-        <img src="images/drawing-reference.jpg" alt="Drawing Reference">
-        <label id="lblitem" for="item">Item:</label>
-        <input type="search" id="item" name="item" placeholder="Enter item details" required><br><br>
+        <h1>Drawing reference</h1>
+        <label id="lbldrawingreference" for="drawingreference">Drawing reference:</label><br>
+        <img src="images/drawing-reference.jpg" alt="Drawing Reference"><br><br>
+        
+        <h1>Item Association</h1>
+        <label id="lblitem" for="searchItem">Search Items:</label><br>
+        <input type="search" id="searchItem" name="searchItem" placeholder="Search by item name or code" onkeyup="filterTable()"><br><br>
+        
+        <table id="itemTable">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr>
+                    <td><input type="checkbox" class="select-checkbox" value="1"></td>
+                    <td>1001</td>
+                    <td>Wood Block</td>
+                    <td>Materials</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="select-checkbox" value="2"></td>
+                    <td>1002</td>
+                    <td>Metal Rod</td>
+                    <td>Materials</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="select-checkbox" value="3"></td>
+                    <td>1003</td>
+                    <td>Textile Fabric</td>
+                    <td>Materials</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="select-checkbox" value="4"></td>
+                    <td>1004</td>
+                    <td>Clay Batch</td>
+                    <td>Materials</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="select-checkbox" value="5"></td>
+                    <td>1005</td>
+                    <td>Drill Machine</td>
+                    <td>Tools</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="selected-items">
+            <h3>Selected Items:</h3>
+            <input type="hidden" id="selectedItems" name="selectedItems">
+            <div id="selectedItemsList">No items selected</div>
+        </div><br>
+        
         <input type="submit" id="btnSubmit" value="Submit">
     </form>
+
+    <script>
+        // Filter table based on search input
+        function filterTable() {
+            const searchValue = document.getElementById('searchItem').value.toLowerCase();
+            const tableRows = document.querySelectorAll('#tableBody tr');
+            
+            tableRows.forEach(row => {
+                const itemName = row.cells[2].textContent.toLowerCase();
+                const itemId = row.cells[1].textContent.toLowerCase();
+                
+                if (itemName.includes(searchValue) || itemId.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Handle checkbox selection
+        document.querySelectorAll('.select-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedItems);
+        });
+        
+        function updateSelectedItems() {
+            const selectedCheckboxes = document.querySelectorAll('.select-checkbox:checked');
+            const selectedItems = [];
+            let selectedItemsList = '';
+            
+            selectedCheckboxes.forEach(checkbox => {
+                const row = checkbox.closest('tr');
+                const itemId = row.cells[1].textContent;
+                const itemName = row.cells[2].textContent;
+                
+                selectedItems.push({
+                    id: itemId,
+                    name: itemName
+                });
+                
+                selectedItemsList += `<p>• ${itemName} (ID: ${itemId})</p>`;
+            });
+            
+            // Update the hidden field with selected items
+            document.getElementById('selectedItems').value = JSON.stringify(selectedItems);
+            
+            // Update the display
+            const listDiv = document.getElementById('selectedItemsList');
+            if (selectedItemsList === '') {
+                listDiv.innerHTML = 'No items selected';
+            } else {
+                listDiv.innerHTML = selectedItemsList;
+            }
+        }
+    </script>
 </body>
 
 </html>
