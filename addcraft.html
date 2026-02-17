@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Craft</title>
+     <meta charset="UTF-8">
+    <title>Add Craft</title>
     <style>
         #itemTable {
             width: 100%;
@@ -68,6 +70,17 @@
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
         </select><br><br>
+        <h1>Total Estimation</h1>
+        <label id="lblTotalDays">Total Estimated Days: </label>
+        <span id="totalDays" style="font-weight: bold; color: #4CAF50;">0</span> days<br>
+        <label id="lblhoursPerDay" for="hoursPerDay">Hours Per Day: </label>
+        <input type="number" id="hoursPerDay" name="hoursPerDay" placeholder="Enter hours per day" value="8" min="1" max="24" onchange="calculateEstimation()"><br>
+        <label id="lblTotalHours">Total Estimated Hours: </label>
+        <span id="totalHours" style="font-weight: bold; color: #4CAF50;">0</span> hours<br><br>
+        <label id="lblcostPerHour" for="costPerHour">Cost Per Hour: $</label>
+        <input type="number" id="costPerHour" name="costPerHour" placeholder="Enter cost per hour" value="50" min="0" step="0.01" onchange="calculateEstimation()"><br>
+        <label id="lblTotalCost">Total Estimation Cost: </label>
+        <span id="totalCost" style="font-weight: bold; color: #ff6b6b; font-size: 1.2em;">$0.00</span><br><br>
         <h1>Technical Details</h1>
         <label id="lbltechnicaldetails" for="technicaldetails">Technical Details:</label><br>
         <textarea id="technicaldetails" name="technicaldetails" placeholder="Enter technical details here"
@@ -75,13 +88,13 @@
         <label id="lblDescription" for="description">Description:</label><br>
         <input type="text" id="description" name="description" placeholder="Enter a summary of the craft details"
             required><br><br>
-        <h1>Drawing reference</h1>
-        <label id="lbldrawingreference" for="drawingreference">Drawing reference:</label><br>
+            <h1>Drawing reference</h1>
+            <label id="lbldrawingreference" for="drawingreference">Drawing reference:</label><br>
         <img src="images/drawing-reference.jpg" alt="Drawing Reference"><br><br>
         
         <h1>Item Association</h1>
         <label id="lblitem" for="searchItem">Search Items:</label><br>
-        <input type="search" id="searchItem" name="searchItem" placeholder="Search by item name or code" onkeyup="filterTable()" required><br><br>
+        <input type="search" id="searchItem" name="searchItem" placeholder="Search by item name or code" onkeyup="filterTable()"><br><br>
         
         <table id="itemTable">
             <thead>
@@ -137,7 +150,6 @@
             <input type="hidden" id="selectedItems" name="selectedItems">
             <div id="selectedItemsList">No items selected</div>
         </div><br>
-        
         <input type="submit" id="btnSubmit" value="Submit">
     </form>
 
@@ -193,6 +205,34 @@
                 listDiv.innerHTML = selectedItemsList;
             }
         }
+        
+        // Calculate total estimation (days, hours, and cost)
+        function calculateEstimation() {
+            const startDate = new Date(document.getElementById('Estimatedstart').value);
+            const endDate = new Date(document.getElementById('Estimatedend').value);
+            const hoursPerDay = parseInt(document.getElementById('hoursPerDay').value) || 8;
+            const costPerHour = parseFloat(document.getElementById('costPerHour').value) || 0;
+            
+            if (startDate && endDate && startDate <= endDate) {
+                // Calculate difference in days
+                const timeDifference = endDate - startDate;
+                const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)) + 1;
+                const totalHours = totalDays * hoursPerDay;
+                const totalCost = totalHours * costPerHour;
+                
+                document.getElementById('totalDays').textContent = totalDays;
+                document.getElementById('totalHours').textContent = totalHours;
+                document.getElementById('totalCost').textContent = '$' + totalCost.toFixed(2);
+            } else {
+                document.getElementById('totalDays').textContent = '0';
+                document.getElementById('totalHours').textContent = '0';
+                document.getElementById('totalCost').textContent = '$0.00';
+            }
+        }
+        
+        // Add event listeners for date changes and cost inputs
+        document.getElementById('Estimatedstart').addEventListener('change', calculateEstimation);
+        document.getElementById('Estimatedend').addEventListener('change', calculateEstimation);
     </script>
 </body>
 
