@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Add Craft</title>
-    </head>
-    <body>
-        <h1>Add Craft</h1>
-            <form id="frmAddProduct" action="./summary.html" method="get">
-            <label id="lblcraftcode" for="code">Craft Code:</label><br>
-            <input type="number" id="code" name="code" placeholder="Enter the craft code" required><br><br>
-            <label id="lblcraftname">Craft name:</label><br>
-            <input type="text" id="name" name="name" placeholder="Enter the craft name" required><br><br>
-            <label id="lblcategory" for="ddlcategory">Work Category:</label><br>
-           <select id="ddlcategory" name="ddlcategory" required>
-                <option value="">Select a category</option>
-                <option value="Woodwork">Woodwork</option>
-                <option value="Metalwork">Metalwork</option>
-                <option value="Textiles">Textiles</option>
-                <option value="Ceramics">Ceramics</option>
-            </select><br><br>
-            <label id="lblselection" for="ddlselection">Selection</label><br>
-            <select id="ddlselection" name="ddlselection" required>
-                <option value="">Select a selection</option>
-                <option value="Handmade">Handmade</option>
-                <option value="Machine-made">Machine-made</option>
-            </select><br><br>
-            <label id="lbllocation" for="location">Location:</label><br>
-            <input type="text" id="location" name="location" placeholder="Enter the location" required><br><br>
-            <label id="lblEstimatedstart" for="Estimatedstart">Estimated start:</label><br>
-            <input type="date" id="Estimatedstart" name="Estimatedstart" required><br><br>
-            <label id="lblEstimatedend" for="Estimatedend">Estimated end:</label><br>
-            <input type="date" id="Estimatedend" name="Estimatedend" required><br><br>
-            <label id="lblstatus" for="ddlstatus">Status:</label><br>
-            <select id="ddlstatus" name="ddlstatus" required>
-                <option value="">Select a status</option>
-                <option value="Not Started">Not Started</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-            </select><br><br>
-            <input type="submit" id="btnSubmit" value="Submit">
-        </form>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Craft</title>
+</head>
+
+<body>
+    <h1>Add Craft</h1>
+    <form id="frmAddProduct" action="./summary.html" method="get">
+        <label id="lblcraftcode" for="code">Craft Code:</label><br>
+        <input type="number" id="code" name="code" placeholder="Enter the craft code" required><br><br>
+        <label id="lblcraftname">Craft name:</label><br>
+        <input type="text" id="name" name="name" placeholder="Enter the craft name" required><br><br>
+        <label id="lblcategory" for="ddlcategory">Work Category:</label><br>
+        <select id="ddlcategory" name="ddlcategory" required>
+            <option value="">Select a category</option>
+            <option value="Woodwork">Woodwork</option>
+            <option value="Metalwork">Metalwork</option>
+            <option value="Textiles">Textiles</option>
+            <option value="Ceramics">Ceramics</option>
+        </select><br><br>
+        <label id="lblselection" for="ddlselection">Selection</label><br>
+        <select id="ddlselection" name="ddlselection" required>
+            <option value="">Select a selection</option>
+            <option value="Handmade">Handmade</option>
+            <option value="Machine-made">Machine-made</option>
+        </select><br><br>
+        <label id="lbllocation" for="location">Location:</label><br>
+        <input type="text" id="location" name="location" placeholder="Enter the location" required><br><br>
+        <label id="lblEstimatedstart" for="Estimatedstart">Estimated start:</label><br>
+        <input type="date" id="Estimatedstart" name="Estimatedstart" required><br><br>
+        <label id="lblEstimatedend" for="Estimatedend">Estimated end:</label><br>
+        <input type="date" id="Estimatedend" name="Estimatedend" required><br><br>
+        <label id="lblstatus" for="ddlstatus">Status:</label><br>
+        <select id="ddlstatus" name="ddlstatus" required>
+            <option value="">Select a status</option>
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select><br><br>
+        <h1>Technical Details</h1>
+        <label id="lbltechnicaldetails" for="technicaldetails">Technical Details:</label><br>
+        <textarea id="technicaldetails" name="technicaldetails" placeholder="Enter technical details here"
+            required></textarea><br><br>
+        <label id="lblDescription" for="description">Description:</label><br>
+        <input type="text" id="description" name="description" placeholder="Enter a summary of the craft details"
+            required><br><br>
+            
+        <input type="submit" id="btnSubmit" value="Submit">
+    </form>
+</body>
+
 </html>
