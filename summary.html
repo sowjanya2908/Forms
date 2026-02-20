@@ -8,6 +8,87 @@
         <h1>Technical Details</h1>
         <p id="technicalDetails"></p>
         <input type="button" id="btnBack" value="Back" onclick="history.back()">
+        <script>
+            // Function to get URL parameters
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                const results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // Function to populate the summary
+            function populateSummary() {
+                const code = getUrlParameter('code');
+                const name = getUrlParameter('name');
+                const category = getUrlParameter('ddlcategory');
+                const selection = getUrlParameter('ddlselection');
+                const location = getUrlParameter('location');
+                const startDate = getUrlParameter('Estimatedstart');
+                const endDate = getUrlParameter('Estimatedend');
+                const status = getUrlParameter('ddlstatus');
+                const hoursPerDay = getUrlParameter('hoursPerDay');
+                const costPerHour = getUrlParameter('costPerHour');
+                const description = getUrlParameter('description');
+                const selectedItems = getUrlParameter('selectedItems');
+
+                // Calculate totals (similar to index.html)
+                let totalDays = 0;
+                let totalHours = 0;
+                let totalCost = 0;
+                if (startDate && endDate) {
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+                    if (start <= end) {
+                        totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                        totalHours = totalDays * (parseInt(hoursPerDay) || 8);
+                        totalCost = totalHours * (parseFloat(costPerHour) || 0);
+                    }
+                }
+
+                // Build summary text
+                let summaryText = `
+                    <strong>Craft Code:</strong> ${code}<br>
+                    <strong>Craft Name:</strong> ${name}<br>
+                    <strong>Category:</strong> ${category}<br>
+                    <strong>Selection:</strong> ${selection}<br>
+                    <strong>Location:</strong> ${location}<br>
+                    <strong>Estimated Start:</strong> ${startDate}<br>
+                    <strong>Estimated End:</strong> ${endDate}<br>
+                    <strong>Status:</strong> ${status}<br>
+                    <strong>Total Estimated Days:</strong> ${totalDays}<br>
+                    <strong>Hours Per Day:</strong> ${hoursPerDay}<br>
+                    <strong>Total Estimated Hours:</strong> ${totalHours}<br>
+                    <strong>Cost Per Hour:</strong> $${costPerHour}<br>
+                    <strong>Total Estimation Cost:</strong> $${totalCost.toFixed(2)}<br>
+                    <strong>Description:</strong> ${description}<br>
+                `;
+
+                // Add selected items if any
+                if (selectedItems) {
+                    try {
+                        const items = JSON.parse(selectedItems);
+                        if (items.length > 0) {
+                            summaryText += '<strong>Selected Items:</strong><br>';
+                            items.forEach(item => {
+                                summaryText += `• ${item.name} (ID: ${item.id})<br>`;
+                            });
+                        }
+                    } catch (e) {
+                        // Ignore if not valid JSON
+                    }
+                }
+
+                document.getElementById('summary').innerHTML = summaryText;
+
+                // Populate technical details
+                const technicalDetails = getUrlParameter('technicaldetails');
+                document.getElementById('technicalDetails').innerHTML = technicalDetails || 'No technical details provided.';
+            }
+
+            // Call the function when the page loads
+            window.onload = populateSummary;
+        </script>
     </body>
 </html>
 
