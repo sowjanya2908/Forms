@@ -12,3 +12,10 @@
     border: none;
     cursor: pointer;
 }
+.login-name{
+    background-color: rgb(255, 0, 162);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
