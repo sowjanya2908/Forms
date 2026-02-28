@@ -10,6 +10,8 @@ A web-based form application for managing craft projects. This application allow
 - **Work Category Selection**: Choose from Woodwork, Metalwork, Textiles, or Ceramics
 - **Production Type**: Select between Handmade or Machine-made options
 - **Timeline Management**: Set estimated start and end dates
+- **Material Type**: Select from various materials (Wood, Metal, Fabric, Clay, Glass, Composite)
+- **Budget Tracking**: Set project budget amount
 - **Cost Estimation**: Calculate total project cost based on hourly rates
   - Automatic calculation of total days
   - Configurable hours per day

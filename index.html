@@ -72,6 +72,18 @@
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
         </select><br><br>
+        <label id="lblmaterialtype" for="ddlmaterialtype">Material Type:</label><br>
+        <select id="ddlmaterialtype" name="ddlmaterialtype" required>
+            <option value="">Select a material type</option>
+            <option value="Wood">Wood</option>
+            <option value="Metal">Metal</option>
+            <option value="Fabric">Fabric</option>
+            <option value="Clay">Clay</option>
+            <option value="Glass">Glass</option>
+            <option value="Composite">Composite</option>
+        </select><br><br>
+        <label id="lblbudgetamount" for="budgetamount">Budget Amount: $</label><br>
+        <input type="number" id="budgetamount" name="budgetamount" placeholder="Enter budget amount" min="0" step="0.01" required><br><br>
         <h1 class="login-block">Total Estimation</h1>
         <label id="lblTotalDays">Total Estimated Days: </label>
         <span id="totalDays" style="font-weight: bold; color: #4CAF50;">0</span> days<br>
